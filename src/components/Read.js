@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Table } from 'semantic-ui-react'
+import { Button, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ export default function Read() {
   const [APIData, setAPIData] = useState([]);
 
   useEffect(() => {
-    axios.get('https://63b7b2474f17e3a931da1e08.mockapi.io/fakeData')
+    axios.get('https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users') 
       .then((response) => {
         setAPIData(response.data);
       })
@@ -23,9 +23,9 @@ export default function Read() {
 
   const onDelete = (id) => {
     axios.delete(`https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users/${id}`)
-    .then(() => {
-      getData();
-    })
+      .then(() => {
+        getData();
+      })
   }
 
   const getData = () => {
@@ -37,36 +37,41 @@ export default function Read() {
 
   return (
     <div>
-      <Table singleLine>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>First Name</Table.HeaderCell>
-            <Table.HeaderCell>Last Name</Table.HeaderCell>
-            <Table.HeaderCell>Checked</Table.HeaderCell>
-            <Table.HeaderCell>Update</Table.HeaderCell>
-            <Table.HeaderCell>Delete</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {APIData.map((data) => {
-            return (
-              <Table.Row>
-                <Table.Cell>{data.firstName}</Table.Cell>
-                <Table.Cell>{data.lastName}</Table.Cell>
-                <Table.Cell>{data.checkbox ? 'checkbox' : 'Unchecked'}</Table.Cell>
-                <Link to='/update'>
+      {APIData.length === 0 ? (
+        <div>No data available</div>
+      ) : (
+        <Table singleLine>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>First Name</Table.HeaderCell>
+              <Table.HeaderCell>Last Name</Table.HeaderCell>
+              <Table.HeaderCell>Checked</Table.HeaderCell>
+              <Table.HeaderCell>Update</Table.HeaderCell>
+              <Table.HeaderCell>Delete</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {APIData.map((data) => {
+              return (
+                <Table.Row key={data.id}>  {/* 고유 key 설정 */}
+                  <Table.Cell>{data.firstName}</Table.Cell>
+                  <Table.Cell>{data.lastName}</Table.Cell>
+                  <Table.Cell>{data.checkbox ? 'checkbox' : 'Unchecked'}</Table.Cell>
                   <Table.Cell>
-                    <Button onClick={() => setData(data)}>Update</Button>
+                    <Link to='/update'>
+                      <Button onClick={() => setData(data)}>Update</Button>
+                    </Link>
                   </Table.Cell>
-                </Link>
-                <Table.Cell>
-                  <Button onClick={() => onDelete(data.id)}>Delete</Button>
-                </Table.Cell>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      </Table>
+                  <Table.Cell>
+                    <Button onClick={() => onDelete(data.id)}>Delete</Button>
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })}
+          </Table.Body>
+        </Table>
+      )}
     </div>
   )
 }
