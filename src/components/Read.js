@@ -29,7 +29,7 @@ export default function Read() {
   }
 
   const getData = () => {
-    axios.get(`https://63b7b2474f17e3a931da1e08.mockapi.io/fakeData`)
+    axios.get(`https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/:endpoint`)
       .then((getData) => {
         setAPIData(getData.data);
       })
