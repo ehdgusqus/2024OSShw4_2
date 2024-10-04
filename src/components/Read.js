@@ -22,14 +22,14 @@ export default function Read() {
   }
 
   const onDelete = (id) => {
-    axios.delete(`https://63b7b2474f17e3a931da1e08.mockapi.io/fakeData/${id}`)
+    axios.delete(`https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users/${id}`)
     .then(() => {
       getData();
     })
   }
 
   const getData = () => {
-    axios.get(`https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/:endpoint`)
+    axios.get('https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users')
       .then((getData) => {
         setAPIData(getData.data);
       })

@@ -12,7 +12,7 @@ export default function Create() {
   let history = useNavigate();
 
   const postData = () => {
-    axios.post('https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/:endpoint', {
+    axios.post('https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users', {
       firstName,
       lastName,
       checkbox,

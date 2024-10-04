@@ -20,7 +20,7 @@ export default function Update() {
   }, []);
 
   const updateAPIData = () => {
-    axios.put(`https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/:endpoint/${id}`, {
+    axios.put(`https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users/${id}`, {
       firstName,
       lastName,
       checkbox
