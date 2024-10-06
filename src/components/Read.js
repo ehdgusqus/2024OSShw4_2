@@ -7,33 +7,25 @@ export default function Read() {
   const [APIData, setAPIData] = useState([]);
 
   useEffect(() => {
-    axios.get('https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users') 
+    axios.get('https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users')
       .then((response) => {
         setAPIData(response.data);
       })
-  }, [])
-
-  const setData = (data) => {
-    let { id, firstName, lastName, checkbox } = data;
-    localStorage.setItem('ID', id);
-    localStorage.setItem('First Name', firstName);
-    localStorage.setItem('Last Name', lastName);
-    localStorage.setItem('Checkbox Value', checkbox)
-  }
+  }, []);
 
   const onDelete = (id) => {
     axios.delete(`https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users/${id}`)
       .then(() => {
         getData();
-      })
-  }
+      });
+  };
 
   const getData = () => {
     axios.get('https://66ff381f2b9aac9c997e8f37.mockapi.io/api/oss/users')
       .then((getData) => {
         setAPIData(getData.data);
-      })
-  }
+      });
+  };
 
   return (
     <div>
@@ -45,7 +37,9 @@ export default function Read() {
             <Table.Row>
               <Table.HeaderCell>First Name</Table.HeaderCell>
               <Table.HeaderCell>Last Name</Table.HeaderCell>
-              <Table.HeaderCell>Checked</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
+              <Table.HeaderCell>Phone Number</Table.HeaderCell>
+              <Table.HeaderCell>Address</Table.HeaderCell>
               <Table.HeaderCell>Update</Table.HeaderCell>
               <Table.HeaderCell>Delete</Table.HeaderCell>
             </Table.Row>
@@ -54,24 +48,26 @@ export default function Read() {
           <Table.Body>
             {APIData.map((data) => {
               return (
-                <Table.Row key={data.id}>  {/* 고유 key 설정 */}
+                <Table.Row key={data.id}>
                   <Table.Cell>{data.firstName}</Table.Cell>
                   <Table.Cell>{data.lastName}</Table.Cell>
-                  <Table.Cell>{data.checkbox ? 'checkbox' : 'Unchecked'}</Table.Cell>
+                  <Table.Cell>{data.email}</Table.Cell>
+                  <Table.Cell>{data.phoneNumber}</Table.Cell>
+                  <Table.Cell>{data.address}</Table.Cell>
                   <Table.Cell>
                     <Link to='/update'>
-                      <Button onClick={() => setData(data)}>Update</Button>
+                      <Button onClick={() => localStorage.setItem('ID', data.id)}>Update</Button>
                     </Link>
                   </Table.Cell>
                   <Table.Cell>
                     <Button onClick={() => onDelete(data.id)}>Delete</Button>
                   </Table.Cell>
                 </Table.Row>
-              )
+              );
             })}
           </Table.Body>
         </Table>
       )}
     </div>
-  )
+  );
 }
